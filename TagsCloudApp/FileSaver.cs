@@ -3,11 +3,18 @@ using System.Drawing.Imaging;
 
 namespace TagsCloudApp
 {
-	class FileSaver : IFileSaver
-	{
-		public void Save(Image image, string path)
-		{
-			image.Save(path, ImageFormat.Png);
-		}
-	}
+    class FileSaver : IOutputStream
+    {
+        private readonly string path;
+
+        public FileSaver(string path)
+        {
+            this.path = path;
+        }
+
+        public void SaveData(Image image)
+        {
+            image.Save(path, ImageFormat.Png);
+        }
+    }
 }

@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-
-namespace TagsCloudApp
+﻿namespace TagsCloudApp
 {
-	public interface IColorGiver
-	{
-		Dictionary<string, Color> GiveColors(Dictionary<string, int> words);
-	}
+    public interface IColorGiver
+    {
+        Cloud<T> GiveColors<T>(Cloud<T> cloud);
+    }
 }

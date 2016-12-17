@@ -3,11 +3,18 @@ using System.IO;
 
 namespace TagsCloudApp
 {
-	public class FileReader : IFileReader
-	{
-		public IEnumerable<string> ReadFile(string filename)
-		{
-			return File.ReadLines(filename);
-		}
-	}
+    public class FileReader : IInputStream
+    {
+        private readonly string filename;
+
+        public FileReader(string filename)
+        {
+            this.filename = filename;
+        }
+
+        public IEnumerable<string> GetData()
+        {
+            return File.ReadLines(filename);
+        }
+    }
 }

@@ -41,15 +41,15 @@
       <HintPath>..\packages\CommandLineParser.1.9.71\lib\net45\CommandLine.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NHunspell, Version=1.2.5554.16953, Culture=neutral, PublicKeyToken=1ac793ea843b4366, processorArchitecture=MSIL">
-      <HintPath>..\packages\NHunspell.1.2.5554.16953\lib\net\NHunspell.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="nunit.framework, Version=3.5.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.5.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Collections.Immutable, Version=1.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.1.3.0\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
@@ -60,23 +60,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Factories\CloudLayouterFactory.cs" />
+    <Compile Include="Cloud.cs" />
     <Compile Include="ColorGiver.cs" />
+    <Compile Include="Factories\FileReaderFactory.cs" />
+    <Compile Include="Factories\FileSaverFactory.cs" />
     <Compile Include="Factories\ICurveFactory.cs" />
+    <Compile Include="Factories\IInputStreamFactory.cs" />
+    <Compile Include="Factories\IOutputStreamFactory.cs" />
     <Compile Include="Factories\SpiralFactory.cs" />
     <Compile Include="FileSaver.cs" />
-    <Compile Include="Factories\ICloudLayouterFactory.cs" />
+    <Compile Include="Visualizer\ICloudVisualizer.cs" />
+    <Compile Include="Layouter\ICloudLayouter.cs" />
     <Compile Include="IColorGiver.cs" />
     <Compile Include="Factories\IVisulizerSettingsFactory.cs" />
-    <Compile Include="Layouter\CloudLayouter.cs" />
+    <Compile Include="Layouter\CircularCloudLayouter.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="UserInterface.cs" />
     <Compile Include="Visualizer\VisualizerSettings.cs" />
     <Compile Include="Visualizer\CloudVisualizer.cs" />
     <Compile Include="FileReader.cs" />
     <Compile Include="Layouter\ICurve.cs" />
-    <Compile Include="IFileReader.cs" />
-    <Compile Include="IFileSaver.cs" />
+    <Compile Include="IInputStream.cs" />
+    <Compile Include="IOutputStream.cs" />
     <Compile Include="IWordsProcessor.cs" />
     <Compile Include="Extensions\PointExtensions.cs" />
     <Compile Include="Program.cs" />

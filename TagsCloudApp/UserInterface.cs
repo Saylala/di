@@ -1,59 +1,67 @@
 ﻿
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
+using TagsCloudApp.Factories;
 
 namespace TagsCloudApp
 {
-	public class UserInterface
-	{
-		private readonly IFileReader reader;
-		private readonly IWordsProcessor processor;
-		private readonly CloudVisualizer visualizer;
-		private readonly IColorGiver colorGiver;
-		private readonly IVisulizerSettingsFactory settingsFactory;
-		private readonly IFileSaver saver;
-		private readonly IWordsEvaluator wordsEvaluator;
+    public class UserInterface
+    {
+        private readonly IVisulizerSettingsFactory settingsFactory;
+        private readonly IInputStreamFactory readerFactory;
+        private readonly IWordsProcessor processor;
+        private readonly IWordsEvaluator wordsEvaluator;
+        private readonly ICloudLayouter layouter;
+        private readonly IColorGiverFactory colorGiverFactory;
+        private readonly ICloudVisualizer visualizer;
+        private readonly IOutputStreamFactory saverFactory;
 
-		public UserInterface(IFileReader reader, IWordsProcessor processor, CloudVisualizer visualizer,
-			IColorGiver colorGiver, IWordsEvaluator wordsEvaluator, IVisulizerSettingsFactory settingsFactory, IFileSaver saver)
-		{
-			this.reader = reader;
-			this.processor = processor;
-			this.visualizer = visualizer;
-			this.colorGiver = colorGiver;
-			this.settingsFactory = settingsFactory;
-			this.saver = saver;
-			this.wordsEvaluator = wordsEvaluator;
-		}
 
-		public void Work(Options args)
-		{
-			var inputPath = args.InputFile;
-			var outputPath = args.OutputFile;
+        public UserInterface(IVisulizerSettingsFactory settingsFactory, IInputStreamFactory readerFactory, IWordsProcessor processor,
+            IWordsEvaluator wordsEvaluator, ICloudLayouter layouter, IColorGiverFactory colorGiverFactory,
+            ICloudVisualizer visualizer, IOutputStreamFactory saverFactory)
+        {
+            this.settingsFactory = settingsFactory;
+            this.readerFactory = readerFactory;
+            this.processor = processor;
+            this.wordsEvaluator = wordsEvaluator;
+            this.layouter = layouter;
+            this.colorGiverFactory = colorGiverFactory;
+            this.visualizer = visualizer;
+            this.saverFactory = saverFactory;
+        }
 
-			var settings = GetSettings(args);
+        public void Work(Options args)
+        {
+            var settings = GetSettings(args);
 
-			var words = PrepareWords(inputPath);
-			var coloredWords = colorGiver.GiveColors(words);
-			var evaluatedWords = wordsEvaluator.Evaluate(words, settings.ImageSize);
+            var words = PrepareWords(args);
+            var evaluatedWords = wordsEvaluator.Evaluate(words, settings);
+            var cloud = layouter.CreateCloud(evaluatedWords, settings.ImageSize);
 
-			var image = visualizer.Visualise(coloredWords, evaluatedWords, settings);
-			saver.Save(image, outputPath);
-		}
+            var colorGiver = colorGiverFactory.Create(args);
+            var coloredCloud = colorGiver.GiveColors(cloud);
 
-		private Dictionary<string, int> PrepareWords(string filename)
-		{
-			var rawWords = reader.ReadFile(filename);
-			var filteredWords = processor.TransformWords(rawWords);
-			return processor.BuildFrequencyDictionary(filteredWords);
-		}
+            var image = visualizer.Visualize(coloredCloud, settings);
+            var saver = saverFactory.Create(args);
+            saver.SaveData(image);
+        }
 
-		private VisualizerSettings GetSettings(Options args)
-		{
-			var color = Color.FromName(args.BackgroundColor);
-			var size = new Size(args.ImageWidth, args.ImageHeight);
-			var font = new FontFamily(args.Font);
-			return settingsFactory.Create(color, size, font);
-		}
-	}
+        private Dictionary<string, int> PrepareWords(Options args)
+        {
+            var reader = readerFactory.Create(args);
+            var rawWords = reader.GetData();
+            var filteredWords = processor.TransformWords(rawWords);
+            return processor.BuildFrequencyDictionary(filteredWords);
+        }
+
+        private VisualizerSettings GetSettings(Options args)
+        {
+            var color = Color.FromName(args.BackgroundColor);
+            var size = new Size(args.ImageWidth, args.ImageHeight);
+            var font = new FontFamily(args.Font);
+            return settingsFactory.Create(color, size, font);
+        }
+    }
 }

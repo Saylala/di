@@ -2,8 +2,8 @@
 
 namespace TagsCloudApp
 {
-	public interface IFileReader
-	{
-		IEnumerable<string> ReadFile(string filename);
-	}
+    public interface IInputStream
+    {
+        IEnumerable<string> GetData();
+    }
 }

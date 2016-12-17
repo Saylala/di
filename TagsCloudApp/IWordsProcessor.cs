@@ -2,9 +2,9 @@
 
 namespace TagsCloudApp
 {
-	public interface IWordsProcessor
-	{
-		IEnumerable<string> TransformWords(IEnumerable<string> words);
-		Dictionary<string, int> BuildFrequencyDictionary(IEnumerable<string> words);
-	}
+    public interface IWordsProcessor
+    {
+        IEnumerable<string> TransformWords(IEnumerable<string> words);
+        Dictionary<string, int> BuildFrequencyDictionary(IEnumerable<string> words);
+    }
 }

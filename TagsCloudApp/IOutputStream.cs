@@ -2,8 +2,8 @@
 
 namespace TagsCloudApp
 {
-	public interface IFileSaver
-	{
-		void Save(Image image, string path);
-	}
+    public interface IOutputStream
+    {
+        void SaveData(Image image);
+    }
 }

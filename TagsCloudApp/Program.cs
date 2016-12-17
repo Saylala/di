@@ -1,37 +1,41 @@
-﻿using Autofac;
+﻿using System;
+using Autofac;
 using TagsCloudApp.Factories;
 
 namespace TagsCloudApp
 {
-	public class Program
+    public class Program
     {
-	    static void Main(string[] args)
-	    {
-		    var builder = new ContainerBuilder();
-		    builder.RegisterType<FileReader>().As<IFileReader>();
-			builder.RegisterType<FileSaver>().As<IFileSaver>();
+        static void Main(string[] args)
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<FileReader>().As<IInputStream>();
+            builder.RegisterType<FileSaver>().As<IOutputStream>();
 
-			builder.RegisterType<WordsProcessor>().As<IWordsProcessor>();
-			builder.RegisterType<WordsEvaluator>().As<IWordsEvaluator>();
+            builder.RegisterType<WordsProcessor>().As<IWordsProcessor>();
+            builder.RegisterType<WordsEvaluator>().As<IWordsEvaluator>();
 
-			builder.RegisterType<ColorGiver>().As<IColorGiver>();
-			builder.RegisterType<CloudVisualizer>();
-			builder.RegisterType<SpiralFactory>().As<ICurveFactory>();
-			builder.RegisterType<CloudLayouter>();
+            builder.RegisterType<ColorGiver>().As<IColorGiver>();
+            builder.RegisterType<CloudVisualizer>().As<ICloudVisualizer>();
+            builder.RegisterType<SpiralFactory>().As<ICurveFactory>();
 
-			builder.RegisterType<CloudLayouterFactory>().As<ICloudLayouterFactory>();
-			builder.RegisterType<VisulizerSettingsFactory>().As<IVisulizerSettingsFactory>();
+            builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
 
-		    builder.RegisterType<UserInterface>();
+            builder.RegisterType<VisulizerSettingsFactory>().As<IVisulizerSettingsFactory>();
+            builder.RegisterType<FileReaderFactory>().As<IInputStreamFactory>();
+            builder.RegisterType<FileSaverFactory>().As<IOutputStreamFactory>();
 
-		    var container = builder.Build();
-			using (var scope = container.BeginLifetimeScope())
-			{
-				var options = new Options();
-				if (!CommandLine.Parser.Default.ParseArguments(args, options)) return;
-				var ui = scope.Resolve<UserInterface>();
-				ui.Work(options);
-			}
-		}
+            builder.RegisterType<UserInterface>();
+
+            var container = builder.Build();
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var options = new Options();
+                if (!CommandLine.Parser.Default.ParseArguments(args, options))
+                    return;
+                var ui = scope.Resolve<UserInterface>();
+                ui.Work(options);
+            }
+        }
     }
 }
