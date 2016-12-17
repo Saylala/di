@@ -2,8 +2,8 @@
 
 namespace TagsCloudApp
 {
-	public interface ICurve
-	{
-		Point GetNextPoint();
-	}
+    public interface ICurve
+    {
+        Point GetNextPoint();
+    }
 }

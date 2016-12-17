@@ -2,7 +2,7 @@
 
 namespace TagsCloudApp
 {
-	public static class RectangleExtensions
+    public static class RectangleExtensions
     {
         public static Point GetCenter(this Rectangle rectangle)
         {
