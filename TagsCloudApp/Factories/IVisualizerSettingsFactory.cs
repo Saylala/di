@@ -2,7 +2,7 @@
 
 namespace TagsCloudApp
 {
-    public interface IVisulizerSettingsFactory
+    public interface IVisualizerSettingsFactory
     {
         VisualizerSettings Create(Color backgroundColor, Size imageSize, FontFamily font);
     }
