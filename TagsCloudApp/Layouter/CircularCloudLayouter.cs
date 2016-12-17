@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Drawing;
 using TagsCloudApp.Factories;
+using TagsCloudApp.Layouter;
 
 namespace TagsCloudApp
 {
@@ -16,7 +17,7 @@ namespace TagsCloudApp
 
         public Cloud<T> CreateCloud<T>(Dictionary<T, Size> elements, Size size)
         {
-            var placedElements = new Dictionary<T, Rectangle>();
+            var placedElements = new List<ICloudElement<T>>();
             var placedRectangles = new List<Rectangle>();
             var border = new Rectangle(new Point(0, 0), size);
             var curve = factory.Create(getCenter(border));
@@ -24,7 +25,7 @@ namespace TagsCloudApp
             {
                 var rectangle = PutNextRectangle(curve, border, element.Value, placedRectangles);
                 placedRectangles.Add(rectangle);
-                placedElements[element.Key] = rectangle;
+                placedElements.Add(new CloudElement<T>(rectangle, element.Key));
             }
             return new Cloud<T>(placedElements);
         }

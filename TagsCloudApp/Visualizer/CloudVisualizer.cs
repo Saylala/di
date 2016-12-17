@@ -16,18 +16,19 @@ namespace TagsCloudApp
         public Bitmap Visualize<T>(Cloud<T> coloredCloud, VisualizerSettings settings)
         {
             var image = new Bitmap(settings.ImageSize.Width, settings.ImageSize.Height);
-            var graphics = Graphics.FromImage(image);
-            graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-
-            graphics.Clear(settings.BackgroundColor);
-            foreach (var element in coloredCloud.Elements)
+            using (var graphics = Graphics.FromImage(image))
             {
-                var color = coloredCloud.Colors[element.Key];
-                DrawWord(element.Key.ToString(), color, element.Value, settings.Font, graphics);
+                graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+
+                graphics.Clear(settings.BackgroundColor);
+                foreach (var element in coloredCloud.Elements)
+                {
+                    var color = element.Color;
+                    DrawWord(element.Content.ToString(), color, element.Border, settings.Font, graphics);
+                }
+
+                graphics.Save();
             }
-
-            graphics.Save();
-
             return image;
         }
 
