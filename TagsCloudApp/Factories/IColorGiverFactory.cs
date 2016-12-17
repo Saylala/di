@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TagsCloudApp.Factories
+﻿namespace TagsCloudApp.Factories
 {
-    class IColorGiverFactory
+    public interface IColorGiverFactory
     {
+        IColorGiver Create(Options args);
     }
 }

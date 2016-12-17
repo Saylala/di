@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace TagsCloudApp
 {
-    class WordsEvaluator : IWordsEvaluator
+    public class WordsEvaluator : IWordsEvaluator
     {
         public Dictionary<string, Size> Evaluate(Dictionary<string, int> words, VisualizerSettings settings)
         {

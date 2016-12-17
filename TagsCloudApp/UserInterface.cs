@@ -1,14 +1,12 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using TagsCloudApp.Factories;
 
 namespace TagsCloudApp
 {
     public class UserInterface
     {
-        private readonly IVisulizerSettingsFactory settingsFactory;
+        private readonly IVisualizerSettingsFactory settingsFactory;
         private readonly IInputStreamFactory readerFactory;
         private readonly IWordsProcessor processor;
         private readonly IWordsEvaluator wordsEvaluator;
@@ -18,7 +16,7 @@ namespace TagsCloudApp
         private readonly IOutputStreamFactory saverFactory;
 
 
-        public UserInterface(IVisulizerSettingsFactory settingsFactory, IInputStreamFactory readerFactory, IWordsProcessor processor,
+        public UserInterface(IVisualizerSettingsFactory settingsFactory, IInputStreamFactory readerFactory, IWordsProcessor processor,
             IWordsEvaluator wordsEvaluator, ICloudLayouter layouter, IColorGiverFactory colorGiverFactory,
             ICloudVisualizer visualizer, IOutputStreamFactory saverFactory)
         {

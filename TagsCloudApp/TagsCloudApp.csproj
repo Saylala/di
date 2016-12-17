@@ -62,8 +62,10 @@
   <ItemGroup>
     <Compile Include="Cloud.cs" />
     <Compile Include="ColorGiver.cs" />
+    <Compile Include="Factories\ColorGiverFactory.cs" />
     <Compile Include="Factories\FileReaderFactory.cs" />
     <Compile Include="Factories\FileSaverFactory.cs" />
+    <Compile Include="Factories\IColorGiverFactory.cs" />
     <Compile Include="Factories\ICurveFactory.cs" />
     <Compile Include="Factories\IInputStreamFactory.cs" />
     <Compile Include="Factories\IOutputStreamFactory.cs" />
@@ -72,7 +74,7 @@
     <Compile Include="Visualizer\ICloudVisualizer.cs" />
     <Compile Include="Layouter\ICloudLayouter.cs" />
     <Compile Include="IColorGiver.cs" />
-    <Compile Include="Factories\IVisulizerSettingsFactory.cs" />
+    <Compile Include="Factories\IVisualizerSettingsFactory.cs" />
     <Compile Include="Layouter\CircularCloudLayouter.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="UserInterface.cs" />
@@ -88,7 +90,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Extensions\RectangleExtensions.cs" />
     <Compile Include="Layouter\Spiral.cs" />
-    <Compile Include="Factories\VisulizerSettingsFactory.cs" />
+    <Compile Include="Factories\VisualizerSettingsFactory.cs" />
     <Compile Include="IWordsEvaluator.cs" />
     <Compile Include="WordsEvaluator.cs" />
     <Compile Include="WordsProcessor.cs" />

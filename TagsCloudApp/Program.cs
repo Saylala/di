@@ -1,5 +1,4 @@
-﻿using System;
-using Autofac;
+﻿using Autofac;
 using TagsCloudApp.Factories;
 
 namespace TagsCloudApp
@@ -17,12 +16,14 @@ namespace TagsCloudApp
 
             builder.RegisterType<ColorGiver>().As<IColorGiver>();
             builder.RegisterType<CloudVisualizer>().As<ICloudVisualizer>();
+
             builder.RegisterType<SpiralFactory>().As<ICurveFactory>();
 
             builder.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>();
 
-            builder.RegisterType<VisulizerSettingsFactory>().As<IVisulizerSettingsFactory>();
+            builder.RegisterType<VisualizerSettingsFactory>().As<IVisualizerSettingsFactory>();
             builder.RegisterType<FileReaderFactory>().As<IInputStreamFactory>();
+            builder.RegisterType<ColorGiverFactory>().As<IColorGiverFactory>();
             builder.RegisterType<FileSaverFactory>().As<IOutputStreamFactory>();
 
             builder.RegisterType<UserInterface>();

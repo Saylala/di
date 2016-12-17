@@ -3,7 +3,7 @@ using System.Drawing.Imaging;
 
 namespace TagsCloudApp
 {
-    class FileSaver : IOutputStream
+    public class FileSaver : IOutputStream
     {
         private readonly string path;
 
