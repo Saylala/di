@@ -2,8 +2,8 @@
 
 namespace TagsCloudApp.Factories
 {
-	public interface ICurveFactory
-	{
-		ICurve Create(Point startPoint);
-	}
+    public interface ICurveFactory
+    {
+        ICurve Create(Point startPoint);
+    }
 }
