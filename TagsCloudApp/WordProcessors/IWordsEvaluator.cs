@@ -5,6 +5,6 @@ namespace TagsCloudApp
 {
     public interface IWordsEvaluator
     {
-        Dictionary<string, Size> Evaluate(Dictionary<string, int> words, VisualizerSettings settings);
+        Result<Dictionary<string, Size>> Evaluate(Dictionary<string, int> words, VisualizerSettings settings);
     }
 }

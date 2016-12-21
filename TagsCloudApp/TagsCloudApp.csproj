@@ -73,6 +73,7 @@
     <Compile Include="Factories\IOutputStreamFactory.cs" />
     <Compile Include="Factories\SpiralFactory.cs" />
     <Compile Include="DataOutput\FileSaver.cs" />
+    <Compile Include="Result.cs" />
     <Compile Include="Visualizer\ICloudVisualizer.cs" />
     <Compile Include="Layouter\ICloudLayouter.cs" />
     <Compile Include="Coloring\IColorGiver.cs" />

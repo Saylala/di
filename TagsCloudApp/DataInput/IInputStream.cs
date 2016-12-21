@@ -4,6 +4,6 @@ namespace TagsCloudApp
 {
     public interface IInputStream
     {
-        IEnumerable<string> GetData();
+        Result<IEnumerable<string>> GetData();
     }
 }

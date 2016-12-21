@@ -12,9 +12,9 @@ namespace TagsCloudApp
             this.filename = filename;
         }
 
-        public IEnumerable<string> GetData()
+        public Result<IEnumerable<string>> GetData()
         {
-            return File.ReadLines(filename);
+            return Result.Of(() => File.ReadLines(filename));
         }
     }
 }

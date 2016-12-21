@@ -32,10 +32,11 @@ namespace TagsCloudApp
             return image;
         }
 
-        private int PickUpFontSize(string text, FontFamily family, Rectangle border)
+        private float PickUpFontSize(string text, FontFamily family, Rectangle border)
         {
             var fits = false;
-            var size = border.Width;
+            float size = border.Width;
+            const float step = 0.25f;
             using (var image = new Bitmap(1, 1))
             {
                 using (var g = Graphics.FromImage(image))
@@ -46,7 +47,7 @@ namespace TagsCloudApp
                         var font = new Font(family, size);
                         var stringSize = g.MeasureString(text, font);
                         fits = stringSize.Width < border.Width;
-                        size -= 1;
+                        size -= step;
                     }
                 }
             }

@@ -5,6 +5,6 @@ namespace TagsCloudApp
 {
     public interface ICloudLayouter
     {
-        Cloud<T> CreateCloud<T>(Dictionary<T, Size> elements, Size size);
+        Result<Cloud<T>> CreateCloud<T>(Dictionary<T, Size> elements, Size size);
     }
 }

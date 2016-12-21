@@ -10,33 +10,40 @@ namespace TagsCloudApp
     public class CircularCloudLayouter : ICloudLayouter
     {
         private readonly ICurveFactory factory;
+
         public CircularCloudLayouter(ICurveFactory factory)
         {
             this.factory = factory;
         }
 
-        public Cloud<T> CreateCloud<T>(Dictionary<T, Size> elements, Size size)
+        public Result<Cloud<T>> CreateCloud<T>(Dictionary<T, Size> elements, Size size)
         {
             var placedElements = new List<ICloudElement<T>>();
             var placedRectangles = new List<Rectangle>();
             var border = new Rectangle(new Point(0, 0), size);
-            var curve = factory.Create(getCenter(border));
+            var curve = factory.Create(GetCenter(border));
             foreach (var element in elements)
             {
-                var rectangle = PutNextRectangle(curve, border, element.Value, placedRectangles);
+                var result = PutNextRectangle(curve, border, element.Value, placedRectangles);
+                if (!result.IsSuccess)
+                    return Result.Fail<Cloud<T>>(result.Error);
+                var rectangle = result.Value;
                 placedRectangles.Add(rectangle);
                 placedElements.Add(new CloudElement<T>(rectangle, element.Key));
             }
-            return new Cloud<T>(placedElements);
+            return Result.Ok(new Cloud<T>(placedElements));
         }
 
-        private Rectangle PutNextRectangle(ICurve curve, Rectangle border, Size rectangleSize, List<Rectangle> placedRectangles)
+        private Result<Rectangle> PutNextRectangle(ICurve curve, Rectangle border, Size rectangleSize, List<Rectangle> placedRectangles)
         {
-            var currentPoint = GetNextPoint(curve, border, rectangleSize, placedRectangles);
+            var result = GetNextPoint(curve, border, rectangleSize, placedRectangles);
+            if (!result.IsSuccess)
+                return Result.Fail<Rectangle>(result.Error);
+            var currentPoint = result.Value;
             var upperLeftPoint = new Point(currentPoint.X - rectangleSize.Width / 2,
                 currentPoint.Y - rectangleSize.Height / 2);
             var rectangle = new Rectangle(upperLeftPoint, rectangleSize);
-            return rectangle;
+            return Result.Ok(rectangle);
         }
 
         private bool CanPutRectangle(Point center, Size rectangleSize, List<Rectangle> placedRectangles, Rectangle border)
@@ -46,19 +53,19 @@ namespace TagsCloudApp
             return placedRectangles.All(x => !x.IntersectsWith(rectangle)) && rectangle.IsInside(border);
         }
 
-        private Point GetNextPoint(ICurve curve, Rectangle border, Size rectangleSize, List<Rectangle> placedRectangles)
+        private Result<Point> GetNextPoint(ICurve curve, Rectangle border, Size rectangleSize, List<Rectangle> placedRectangles)
         {
-            var point = getCenter(border);
+            var point = GetCenter(border);
             while (!CanPutRectangle(point, rectangleSize, placedRectangles, border))
             {
                 point = curve.GetNextPoint();
                 if (!point.IsInside(border))
-                    throw new ArgumentException("Cannot put rectangle of this size");
+                    return Result.Fail<Point>("Cannot put rectangle of this size");
             }
-            return point;
+            return Result.Ok(point);
         }
 
-        private Point getCenter(Rectangle border)
+        private Point GetCenter(Rectangle border)
         {
             var x = border.X + border.Width / 2;
             var y = border.Y + border.Height / 2;
