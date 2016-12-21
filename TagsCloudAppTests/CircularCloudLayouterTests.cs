@@ -31,8 +31,8 @@ namespace TagsCloudAppTests
 
             var cloud = circularCloudLayouter.CreateCloud(elements, size);
 
-            Assert.AreEqual(1, cloud.Elements.Count);
-            Assert.AreEqual(new Point(500, 500), cloud.Elements.First().Border.GetCenter());
+            Assert.AreEqual(1, cloud.GetValueOrThrow().Elements.Count);
+            Assert.AreEqual(new Point(500, 500), cloud.GetValueOrThrow().Elements.First().Border.GetCenter());
         }
 
         [TestCase(1001, 1)]
@@ -62,8 +62,8 @@ namespace TagsCloudAppTests
             };
 
             var cloud = circularCloudLayouter.CreateCloud(elements, size);
-            var firstRectangle = cloud.Elements[0].Border;
-            var secondRectangle = cloud.Elements[1].Border;
+            var firstRectangle = cloud.GetValueOrThrow().Elements[0].Border;
+            var secondRectangle = cloud.GetValueOrThrow().Elements[1].Border;
 
             Assert.False(firstRectangle.IntersectsWith(secondRectangle));
         }
@@ -82,8 +82,8 @@ namespace TagsCloudAppTests
             };
 
             var cloud = circularCloudLayouter.CreateCloud(elements, size);
-            var firstRectangle = cloud.Elements[0].Border;
-            var secondRectangle = cloud.Elements[1].Border;
+            var firstRectangle = cloud.GetValueOrThrow().Elements[0].Border;
+            var secondRectangle = cloud.GetValueOrThrow().Elements[1].Border;
 
             Assert.False(firstRectangle.GetCenter().Equals(secondRectangle.GetCenter()));
         }
@@ -98,9 +98,9 @@ namespace TagsCloudAppTests
             var elements = CreateLayout(count, width, height);
             var cloud = circularCloudLayouter.CreateCloud(elements, size);
 
-            foreach (var pair in cloud.Elements)
+            foreach (var pair in cloud.GetValueOrThrow().Elements)
             {
-                var otherPairs = cloud.Elements.Where(x => !x.Equals(pair));
+                var otherPairs = cloud.GetValueOrThrow().Elements.Where(x => !x.Equals(pair));
                 foreach (var otherPair in otherPairs)
                     Assert.IsFalse(pair.Border.IntersectsWith(otherPair.Border));
             }
@@ -125,7 +125,7 @@ namespace TagsCloudAppTests
             var rectangleArray = new Rectangle[rectanglesCount];
 
             for (var i = 0; i < rectanglesCount; i++)
-                rectangleArray[i] = cloud.Elements[i].Border;
+                rectangleArray[i] = cloud.GetValueOrThrow().Elements[i].Border;
 
             var outerRectanglesCount = GetRectanglesOutsideCircle(rectangleArray, spacingCoefficent);
             var outerRectanglesCoefficent = outerRectanglesCount / rectangleArray.Length;
@@ -152,7 +152,7 @@ namespace TagsCloudAppTests
             var rectangleArray = new Rectangle[rectanglesCount];
 
             for (var i = 0; i < rectanglesCount; i++)
-                rectangleArray[i] = cloud.Elements[i].Border;
+                rectangleArray[i] = cloud.GetValueOrThrow().Elements[i].Border;
 
             var outerRectanglesCount = GetRectanglesOutsideCircle(rectangleArray, spacingCoefficent);
             var outerRectanglesCoefficent = outerRectanglesCount / rectangleArray.Length;
